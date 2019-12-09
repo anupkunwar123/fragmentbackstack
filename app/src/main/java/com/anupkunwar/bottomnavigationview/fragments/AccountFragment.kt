@@ -10,17 +10,30 @@ import kotlinx.android.synthetic.main.frament_account.*
 
 class AccountFragment : Fragment() {
 
+    var message = ""
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        savedInstanceState?.let {
+            message = it.getString("message", "")
+        }
+
         return inflater.inflate(R.layout.frament_account, container, false)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("message", message)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        textView.text = message
         button.setOnClickListener {
-            textView.text = "Account is loaded!!"
+            message = "Account is loaded!!"
+            textView.text = message
         }
     }
 }

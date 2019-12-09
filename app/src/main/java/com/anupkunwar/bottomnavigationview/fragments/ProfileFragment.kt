@@ -9,17 +9,30 @@ import com.anupkunwar.bottomnavigationview.R
 import kotlinx.android.synthetic.main.frament_profile.*
 
 class ProfileFragment : Fragment() {
+
+    var message = ""
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        savedInstanceState?.let {
+            message = it.getString("message", "")
+        }
         return inflater.inflate(R.layout.frament_profile, container, false)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("message", message)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        textView.text = message
         button.setOnClickListener {
-            textView.text = "Profile :D"
+            message = "Profile :D"
+            textView.text = message
         }
     }
 
